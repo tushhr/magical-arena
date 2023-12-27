@@ -13,7 +13,7 @@ class MagicalArena {
     
     attack(attacker, defender) {
         console.log("Attacker: " + attacker.name + " Defender: " + defender.name);
-        const damage = attacker.rollDice() * attacker.strength - defender.defense;
+        const damage = attacker.rollDice() * attacker.strength - defender.rollDice() * defender.defense;
 
         if (damage > 0) {
             console.log("Damage: " + damage);
@@ -39,6 +39,11 @@ class MagicalArena {
     }
 
     fight() {
+        if(this.isGameOver()) {
+            console.log("Game not possible. One of the players is already dead.");
+            return;
+        }
+
         let round = 1;
 
         while (!this.isGameOver() && round <= 100000) {
