@@ -58,12 +58,6 @@ async function main() {
         players.push(new Player(name, health, strength, defense));
     }
 
-    if (players[0].health > players[1].health) {
-        const temp = players[0];
-        players[0] = players[1];
-        players[1] = temp;
-    }
-
     const magicalArena = new MagicalArena(players[0], players[1]);
     await startFight(magicalArena);
 

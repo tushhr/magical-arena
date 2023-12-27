@@ -2,6 +2,13 @@ class MagicalArena {
     constructor(player1, player2) {
         this.player1 = player1;
         this.player2 = player2;
+        
+        // to make sure player1 health is always lower than player2
+        if(this.player1.health > this.player2.health) {
+            const temp = this.player1;
+            this.player1 = this.player2;
+            this.player2 = temp;
+        }
     }
     
     attack(attacker, defender) {
@@ -30,7 +37,6 @@ class MagicalArena {
     }
 
     fight() {
-        // assuming player1 has lower health than player2
         while (!this.isGameOver()) {
             this.attack(this.player1, this.player2);
 
