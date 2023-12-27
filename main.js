@@ -27,12 +27,13 @@ const getFloatingInput = async (i, name) => {
         if (!isNaN(parseFloat(input))) {
             return parseFloat(input);
         }
+        console.log("Invalid Input. Please enter a number");
     } while (true);
 }
 
 const startFight = async (magicalArena) => { 
     while(true) {
-        const startFight = await askQuestion(`Start Fight? (y/n): `);
+        const startFight = await getInput(`Start Fight? (y/n): `);
 
         if (startFight === 'y') {
             magicalArena.fight();

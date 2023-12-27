@@ -15,9 +15,11 @@ class MagicalArena {
         console.log("Attacker: " + attacker.name + " Defender: " + defender.name);
         const damage = attacker.rollDice() * attacker.strength - defender.defense;
 
-        console.log("Damage: " + damage);
         if (damage > 0) {
+            console.log("Damage: " + damage);
             defender.health -= damage;
+        } else {
+            console.log("Damage: None");
         }
 
         console.log("Defender Health: " + defender.health);
@@ -37,17 +39,25 @@ class MagicalArena {
     }
 
     fight() {
-        while (!this.isGameOver()) {
+        let round = 1;
+
+        while (!this.isGameOver() && round <= 100000) {
             this.attack(this.player1, this.player2);
 
             if(!this.isGameOver()) {
                 this.attack(this.player2, this.player1);
             }
-        }
 
-        console.log("Game Over!");
-        let winner = this.returnWinner();
-        console.log("Winner: " + winner.name);
+            round += 1;
+        }
+        
+        if(this.isGameOver()) {
+            console.log("Game Over!");
+            let winner = this.returnWinner();
+            console.log("Winner: " + winner.name);
+        } else {
+            console.log("It's a Draw!")
+        }
     }
 }
 
