@@ -1,3 +1,4 @@
+const Player = require('./controllers/player.js');
 const readline = require('readline');
 
 const rl = readline.createInterface({
@@ -24,12 +25,15 @@ const getFloatingInput = async (i, name) => {
 }
 
 async function main() {
+    const players = [];
     for(let i = 0; i < 2; i++) {
         const name = await askQuestion(`Enter Name of Player${i + 1}: `);
 
         const health = await getFloatingInput(i, "Health")
         const strength = await getFloatingInput(i, "Strength")
         const defense = await getFloatingInput(i, "Defense")
+
+        players.push(new Player(name, health, strength, defense));
     }
 
     rl.close();
