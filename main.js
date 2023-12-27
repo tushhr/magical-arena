@@ -1,4 +1,5 @@
 const Player = require('./controllers/player.js');
+const Players = require('./controllers/players.js');
 const MagicalArena = require('./controllers/magicalArena.js');
 
 const readline = require('readline');
@@ -31,36 +32,38 @@ const getFloatingInput = async (i, name) => {
     } while (true);
 }
 
-const fight = async (players) => { 
-    for(let j = 0; j < players.length - 1; j++) {
+const getFloatingInputWrapper = async (i, name) => {
+    return await getFloatingInput(`Enter the ${name} of Player${i + 1}: `);
+}
+
+const fight = async (players) => {
+    let availablePlayers = players.getAvailablePlayers()
+
+    while(availablePlayers.length > 1 ) {
+        console.log(availablePlayers)
         const startFight = await getInput(`Start Fight? (y/n): `);
 
-        if (startFight === 'y') {
-            playersAvailableForFight = ""
-            for(let i = 0; i < players.length; i++) {
-                if(players[i].health > 0) {
-                    playersAvailableForFight += ` ${i}`
-                }
-            }
+        if (startFight.toLowerCase() === 'y') {
+            console.log("Players who are still alive: " + availablePlayers);
 
-            console.log("Players who are still alive: " + playersAvailableForFight);
             const playerId1 = await getInput(`Enter ID of Player1: `);
             const playerId2 = await getInput(`Enter ID of Player2: `);
 
-            const magicalArena = new MagicalArena(players[playerId1], players[playerId2]);
+            const magicalArena = new MagicalArena(players.getPlayer(playerId1 - 1), players.getPlayer(playerId2 - 1));
             magicalArena.fight()
-
-        } else if (startFight === 'n') {
+        } else if (startFight.toLowerCase() === 'n') {
             const waitingTime = await getFloatingInput(`How long should we wait? (in seconds) `);
             await sleep(waitingTime);
         } else {
             console.log("Invalid Input. Please check valid options");
         }
+        console.log(availablePlayers)
+        availablePlayers = players.getAvailablePlayers()
     }
 }
 
 async function main() {
-    const players = [];
+    let players = [];
     const numberOfPlayers = await getInput("Enter Number of Players: ");
 
     for(let i = 0; i < numberOfPlayers; i++) {
@@ -73,6 +76,7 @@ async function main() {
         players.push(new Player(name, health, strength, defense));
     }
 
+    players = new Players(players)
     await fight(players);
 
     rl.close();
