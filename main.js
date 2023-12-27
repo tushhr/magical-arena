@@ -21,9 +21,9 @@ function getInput(question) {
     });
 }
 
-const getFloatingInput = async (i, name) => {
+const getFloatingInput = async (placeholder) => {
     do {
-        const input = await getInput(`Enter the ${name} of Player${i + 1}: `);
+        const input = await getInput(placeholder);
 
         if (!isNaN(parseFloat(input)) && parseFloat(input) > 0) {
             return parseFloat(input);
@@ -69,9 +69,9 @@ async function main() {
     for(let i = 0; i < numberOfPlayers; i++) {
         const name = await getInput(`Enter Name of Player${i + 1}: `);
 
-        const health = await getFloatingInput(i, "Health")
-        const strength = await getFloatingInput(i, "Strength")
-        const defense = await getFloatingInput(i, "Defense")
+        const health = await getFloatingInputWrapper(i, "Health")
+        const strength = await getFloatingInputWrapper(i, "Strength")
+        const defense = await getFloatingInputWrapper(i, "Defense")
 
         players.push(new Player(name, health, strength, defense));
     }
