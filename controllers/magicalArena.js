@@ -17,11 +17,30 @@ class MagicalArena {
         return damage;
     }
 
+    isGameOver() {
+        return !this.player1.isAlive() || !this.player2.isAlive();
+    }
+
+    returnWinner() {
+        if (this.player1.isAlive()) {
+            return this.player1;
+        } else {
+            return this.player2;
+        }
+    }
+
     fight() {
         // assuming player1 has lower health than player2
-        while (this.player1.isAlive() && this.player2.isAlive()) {
+        while (!this.isGameOver()) {
             this.attack(this.player1, this.player2);
-            this.attack(this.player2, this.player1);
+
+            if(!this.isGameOver()) {
+                this.attack(this.player2, this.player1);
+            }
         }
+
+        console.log("Game Over!");
+        let winner = this.returnWinner();
+        console.log("Winner: " + winner.name);
     }
 }
