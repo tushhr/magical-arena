@@ -22,3 +22,12 @@
 - Run `node main.js` to start the main function, which will prompt you for your inputs.
 - Yess, that's it!
 - Also run `npm test` for unit tests
+
+### Screenshots
+![Alt text](images/image.png)
+
+![Alt text](images/image-1.png)
+
+![Alt text](images/image-3.png)
+
+![Alt text](images/image-4.png)
