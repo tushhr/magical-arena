@@ -44,3 +44,5 @@ class MagicalArena {
         console.log("Winner: " + winner.name);
     }
 }
+
+module.exports = MagicalArena;
